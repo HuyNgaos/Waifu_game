@@ -186,3 +186,4 @@ class shouta_ttm(shouta):
     def ttm_info():
         print("Congratuation! You find out Tran Tuan Minh ester egg 2!!")
     def ttm_correction():
+         return
