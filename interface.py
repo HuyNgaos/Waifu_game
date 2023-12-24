@@ -9,4 +9,3 @@ class Interface():
        cleanstr = cleanspc.lower() #convert to lowercase
        return cleanstr
     
-class waifu_promt():

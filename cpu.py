@@ -37,9 +37,13 @@ class Final_interact(interaction.waifu_interaction):
                 interaction.BOM.info_bom(wife)
                 interaction.BOM.breed_bom(wife)
         elif wife.type == 'shouta':
-            interaction.shouta.info_loli(wife)
-            interaction.shouta.godpow(wife)
-            if wife.age >= 18:
-                interaction.shouta.breed_loli(wife)
+            if wife.name =='ttm' and wife.personality == 'simp':
+                interaction.shouta_ttm.ttm_info()
+                interaction.shouta_ttm.correction(wife)
             else:
-                interaction.shouta.correction(wife)
+                interaction.shouta.info_loli(wife)
+                interaction.shouta.godpow(wife)
+                if wife.age >= 18:
+                    interaction.shouta.breed_loli(wife)
+                else:
+                    interaction.shouta.correction(wife)
