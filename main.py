@@ -7,7 +7,7 @@ version_now = ["loli", "trap", "malewife", 'bom', 'shouta']
 version_plus = version_now + ['test']
 
 def main():
-    print("Welcome to Waifu Simulator\nCreated by Huy_Ngaos\nVersion 3.8.0\n\n")
+    print("Welcome to Waifu Simulator\nCreated by Huy_Ngaos\nVersion 4.0.0\n\n")
     play_again = 1
     admin_status = False
     root = Tk()
