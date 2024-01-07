@@ -1,49 +1,81 @@
+import tecinical_logic as lg
 import interaction
 
-class Final_interact(interaction.waifu_interaction):
-    def interact(wife, User):
-        if wife.type == 'loli':
-            if wife.name == 'laura' and wife.personality == 'notloli':
-                interaction.laura.laura_info()
-                interaction.laura.send_help()
-            else:
-                interaction.Loli.info_loli(wife)
-                interaction.Loli.godpow(wife)
-                if wife.age >= 18:
-                    interaction.Loli.breed_loli(wife)
+class breeding_waifu():
+    def interact_breed(wife, breed_status, admin, sound):
+        vanila = False
+        nat = f'Narrator: You breed your {wife.type}'
+        ending = {'waifu': wife.type}
+        if breed_status:
+            sound.play()
+            match wife.type:
+                case 'loli':
+                    if (lg.legal.legal_age(wife)):
+                        noises = interaction.loli.legal_breed(wife)
+                        vanila = True
+                        ending['route'] = 'legal breeding'
+                    else:
+                        nat = 'Narrator: You correct the brat'
+                        noises = interaction.loli.correction(wife)
+                        ending['route'] = 'horny jail'
+                case 'trap':
+                    noises = interaction.trap.breed_trap(wife)
+                    vanila = True
+                    ending['route'] = 'Bred'
+                case 'malewife':
+                    noises = interaction.malewife.breed_mw(wife)
+                    vanila = True
+                    ending['route'] = 'Bred'
+                case 'bom':
+                    noises = interaction.bom.breed_bom(wife)
+                    vanila = True
+                    ending['route'] = 'Bred'
+                case 'shouta':
+                    noises = interaction.shouta.breed_shouta(wife)
+                    vanila = True
+                    ending['route'] = 'Bred'
+                case _:
+                    print("Testin'")
+                    ending['route'] = 'Test'
+                    return "Test_Dummy", vanila, nat, ending
+        else:
+            vanila = True
+            nat = f"Narrator: Oh, you don't breed your {wife.type}. Ok"
+            ending['route'] = 'No breed (boring)'
+            noises = ''
+            match wife.type:
+                case 'loli':
+                    if (lg.legal.legal_age(wife)):
+                        pass
+                    else:
+                        nat = "Narrator: Good choice. (Unload gun)"
+                        ending['route'] = 'No Horny'
+                case 'bom':
+                    nat = f'Narrator: Poor the big old man, he got rejected at such an old age of {wife.age}'
+        if admin:
+            lg.admin_log.log(breed_choice = breed_status, noises = noises, ending = ending)
+        return noises, vanila, nat, ending
+    
+    def interact_result(wife, admin):
+        result = 'You had a good time'
+        force_loop = False
+        match wife.type:
+            case 'loli':
+                if (lg.legal.legal_age(wife)):
+                    result = interaction.loli.legal_finished(wife)
                 else:
-                    if wife.name == 'lmu' and wife.personality == 'gamer':
-                        interaction.lmu.fake_breed(wife)
-                    else: interaction.Loli.correction(wife)
-        elif wife.type == 'trap':
-            interaction.Trap.trap_info(wife)
-            interaction.Trap.breed_trap(wife)
-        elif wife.type == 'malewife':
-            if wife.name == 'ttm':
-                interaction.ttm.info_ttm()
-                interaction.ttm.breed_ttm(wife)
-            else:
-                interaction.Malewife.info_malewife(wife)
-                interaction.Malewife.breed_malewife(wife)
-        elif wife.type == 'bom':
-            if wife.name == 'pnm' and wife.personality == 'pervert':
-                interaction.pnm.pmn_info()
-                if User.username == 'ttm':
-                    interaction.pnm.breed_as_ttm(wife)
-                else:
-                    interaction.pnm.breed_pnm(wife)
-              
-            else:
-                interaction.BOM.info_bom(wife)
-                interaction.BOM.breed_bom(wife)
-        elif wife.type == 'shouta':
-            if wife.name =='ttm' and wife.personality == 'simp':
-                interaction.shouta_ttm.ttm_info()
-                interaction.shouta_ttm.correction(wife)
-            else:
-                interaction.shouta.info_loli(wife)
-                interaction.shouta.godpow(wife)
-                if wife.age >= 18:
-                    interaction.shouta.breed_loli(wife)
-                else:
-                    interaction.shouta.correction(wife)
+                    result = interaction.loli.illegal_finished(wife)
+            case 'trap':
+                result = interaction.trap.trap_finished(wife)
+            case 'malewife':
+                result = interaction.malewife.malewife_finished(wife)
+            case 'bom':
+                result = interaction.bom.bom_finished(wife)
+            case 'shouta':
+                result = interaction.shouta.legal_finished(wife)
+            case _:
+                print("Testin'")
+                return "Testing", force_loop
+        if admin:
+            lg.admin_log.log(result = result, force_loop = force_loop)
+        return result, force_loop

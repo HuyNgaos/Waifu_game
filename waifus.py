@@ -6,6 +6,11 @@ class waifu():
         self.personality = personality
         self.cuteness = "Super adorable"
 
+class nonewife(waifu):
+    def __init__(self, age, name, personality):
+        super().__init__(age, name, personality)
+        self.type = 'DNE'
+
 class test(waifu):
     def __init__(self, age, name, personality):
         super().__init__(age, name, personality)
